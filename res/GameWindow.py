@@ -1,13 +1,16 @@
 import pyglet
 from pyglet.window import  key
 from GameObject import GameObject
+from BackgroundObject import BackgroundObject
 
 class GameWindow(pyglet.window.Window):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.set_location(400, 100)
         self.frame_rate = 1/60.0
-        self.player = GameObject( posx = 500, posy = 200 ,image = "Mario_Super.png")
+        self.player = GameObject( posx = 200, posy = 225 ,image = "Mario_Super.png")
+        self.background = BackgroundObject(posx = 0, posy = 0, image = "background_0.jpg")
+
 
     def on_key_press(self, symbol, modifiers):
         if symbol == key.RIGHT:
@@ -24,6 +27,7 @@ class GameWindow(pyglet.window.Window):
             self.player.imageList = self.player.image_list_attack
         if symbol == key.W:
             self.player.imageList = self.player.image_list_walk
+            self.background.velx = -15
         if symbol == key.S:
             self.player.imageList = self.player.image_list_swim
         if symbol == key.D:
@@ -43,13 +47,16 @@ class GameWindow(pyglet.window.Window):
             self.player.vely = 0
         if symbol in (key.A, key.W, key.S, key.D, key.J, key.C):
             self.player.imageList = self.player.image_list_default
+            self.background.velx = 0
 
     def on_draw(self):
         self.clear()
+        self.background.draw()
         self.player.draw()
 
     def update(self, dt):
         self.player.update(dt)
+        self.background.update(dt)
 
 
 
