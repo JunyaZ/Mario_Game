@@ -1,4 +1,6 @@
 import pyglet
+import os
+
 
 class GameObject:
     def __init__(self, posx, posy, image = None):
@@ -29,7 +31,7 @@ class GameObject:
 
         self.imageList =  self.image_list_default
         if image is not None:
-            image = pyglet.image.load('../sprites/heroes/mario/super/'+image)
+            image = pyglet.image.load((os.getcwd())[:-3]+'sprites/heroes/mario/super/'+image)
             self.sprite = pyglet.sprite.Sprite(image, x = self.posx, y = self.posy)
 
     def draw(self):
@@ -44,6 +46,6 @@ class GameObject:
             self.imageIndex = self.imageIndex % len(self.imageList)
             image = self.imageList[self.imageIndex]
             #print(image)
-            image = pyglet.image.load('../sprites/heroes/mario/super/' + image)
+            image = pyglet.image.load((os.getcwd())[:-3]+'/sprites/heroes/mario/super/' + image)
             self.sprite = pyglet.sprite.Sprite(image, x=self.sprite.x, y=self.sprite.y)
             self.update_index = 0
