@@ -1,5 +1,5 @@
 import pyglet
-path= r"C:/Users/1x8le/Documents/MSU course/CSC745/project_pyglet/Mario_Game-master/picture/backgrounds/"
+path= r"C:/Users/1x8le/Documents/Mario_Game-master/picture/backgrounds/"
 class BackgroundObject:
     def __init__(self, posx, posy, image = None):
         self.posx = posx
