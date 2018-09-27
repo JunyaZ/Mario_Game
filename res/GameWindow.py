@@ -2,7 +2,12 @@ import pyglet
 from pyglet.window import  key
 from GameObject import GameObject
 from BackgroundObject import BackgroundObject
+from enemies import Enemies
 import os
+import random
+
+
+ememies_list=[]
 
 class GameWindow(pyglet.window.Window):
 
@@ -12,6 +17,15 @@ class GameWindow(pyglet.window.Window):
         self.frame_rate = 1/60.0
         self.player = GameObject( posx = 200, posy = 225 ,image = "Mario_Super.png")
         self.background = BackgroundObject(posx = 0, posy = 0, image = "background_0.jpg")
+
+        self.enemie1 = Enemies(posx=random.randint(0, 300), posy=225, velx=random.randint(30, 50), vely=0,
+                               image="goomba_1.png")
+        self.enemie2 = Enemies(posx=random.randint(0, 300), posy=225, velx=random.randint(-50, -30), vely=0,
+                               image="goomba_1.png")
+        ememies_list.append(self.enemie1)
+        ememies_list.append(self.enemie2)
+
+        self.toggle = False
 
 
     def on_key_press(self, symbol, modifiers):
@@ -84,10 +98,39 @@ class GameWindow(pyglet.window.Window):
         self.clear()
         self.background.draw()
         self.player.draw()
+        for enemy in ememies_list:
+            enemy.draw()
 
     def update(self, dt):
         self.player.update(dt)
         self.background.update(dt)
+        eneme_out_of_window = []
+        for enemieObj in ememies_list:
+
+            if (enemieObj.getX() < 10 or enemieObj.getX() > 500):
+                print(enemieObj.getX())
+                eneme_out_of_window.append(enemieObj)
+
+            enemieObj.update(dt)
+        for removeEneme in eneme_out_of_window:
+            ememies_list.remove(removeEneme)
+            # ememies_list.remove(enemieObj)
+            start = 0
+            end = 0
+            if (self.toggle == True):
+                start = 20
+                end = 40
+                self.toggle = False
+            else:
+                start = -40
+                end = -20
+                self.toggle = True
+
+            enemie = Enemies(posx=random.randint(0, 300), posy=225, velx=random.randint(start, end), vely=0,
+                             image="goomba_1.png")
+            ememies_list.append(enemie)
+
+            # print(enemieObj.getX())
 
 
 
