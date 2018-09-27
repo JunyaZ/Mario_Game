@@ -62,6 +62,7 @@ class GameWindow(pyglet.window.Window):
 
         if symbol == key.A:
            self.player.imageList = self.player.image_list_attack
+           self.player.state = 4
         if symbol == key.W:
             self.player.state = 0
             self.player.imageList = self.player.image_list_walk
@@ -108,7 +109,7 @@ class GameWindow(pyglet.window.Window):
         for enemieObj in ememies_list:
 
             if (enemieObj.getX() < 10 or enemieObj.getX() > 500):
-                print(enemieObj.getX())
+                #print(enemieObj.getX())
                 eneme_out_of_window.append(enemieObj)
 
             enemieObj.update(dt)

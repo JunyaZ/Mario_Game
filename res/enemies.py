@@ -1,5 +1,6 @@
 import pyglet
-path = r"C:/Users/Ya000/Documents/Mario_Game-master/Mario_Game-master/picture/goomba/"
+import os
+
 class Enemies:
     def __init__(self, posx, posy, velx, vely, image = None):
         self.posx = posx
@@ -13,7 +14,7 @@ class Enemies:
                             'goomba_4.png','goomba_5.png', 'goomba_6.png']
         self.imageList = self.goomba_list
         if image is not None:
-            image = pyglet.image.load(path+image)
+            image = pyglet.image.load((os.getcwd())[:-3]+"picture/goomba/"+image)
             self.sprite = pyglet.sprite.Sprite(image, x = self.posx, y = self.posy)
 
     def getX(self):
@@ -30,7 +31,7 @@ class Enemies:
             self.imageIndex = self.imageIndex % len(self.imageList)
             image = self.imageList[self.imageIndex]
             # print(image)
-            image = pyglet.image.load(path + image)
+            image = pyglet.image.load((os.getcwd())[:-3]+"picture/goomba/" + image)
             self.sprite = pyglet.sprite.Sprite(image, x=self.sprite.x, y=self.sprite.y)
             self.update_index = 0
 
