@@ -1,21 +1,38 @@
 import pyglet
-path = r"C:/Users/1x8le/Documents/MSU course/CSC745/project_pyglet/Mario_Game-master/picture/goomba/"
+import os
 class Enemies:
-    def __init__(self, posx, posy, image = None):
+    def __init__(self, posx, posy, velx, vely, image = None):
         self.posx = posx
         self.posy = posy
-        self.velx = 0
-        self.vely = 0
+        self.velx = velx
+        self.vely = vely
 
         self.imageIndex = 0
         self.update_time = 0
         self.goomba_list = ['goomba_1.png', 'goomba_2.png', 'goomba_3.png',
                             'goomba_4.png','goomba_5.png', 'goomba_6.png']
-        self.image_list_default = ['goomba_1.png']
-        self.imageList =self.image_list_default
+        self.imageList = self.goomba_list
         if image is not None:
-            image = pyglet.image.load(path+image)
+            image = pyglet.image.load((os.getcwd())[:-3]+'sprites/goomba/'+image)
             self.sprite = pyglet.sprite.Sprite(image, x = self.posx, y = self.posy)
+
+    def getX(self):
+        return self.sprite.x
+    def getY(self):
+        return self.posy
+
+    def update(self, dt):
+        self.update_time += 1
+        self.sprite.x += self.velx * dt
+        self.sprite.y += self.vely * dt
+        if (self.update_time % 10 == 0):
+            self.imageIndex += 1
+            self.imageIndex = self.imageIndex % len(self.imageList)
+            image = self.imageList[self.imageIndex]
+            # print(image)
+            image = pyglet.image.load(path + image)
+            self.sprite = pyglet.sprite.Sprite(image, x=self.sprite.x, y=self.sprite.y)
+            self.update_index = 0
 
     def set_velocity(self):
         """Sets velocity vector based on direction"""
@@ -33,7 +50,6 @@ class Enemies:
                 self.frame_index += 1
             elif self.frame_index == 1:
                 self.frame_index = 0
-
             self.animate_timer = self.current_time
 
     def falling(self):
@@ -81,3 +97,4 @@ class Enemies:
 
     def draw(self):
         self.sprite.draw()
+
