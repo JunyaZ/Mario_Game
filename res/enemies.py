@@ -30,7 +30,7 @@ class Enemies:
             self.imageIndex = self.imageIndex % len(self.imageList)
             image = self.imageList[self.imageIndex]
             # print(image)
-            image = pyglet.image.load(path + image)
+            image = pyglet.image.load((os.getcwd())[:-3]+'sprites/goomba/'+image)
             self.sprite = pyglet.sprite.Sprite(image, x=self.sprite.x, y=self.sprite.y)
             self.update_index = 0
 
