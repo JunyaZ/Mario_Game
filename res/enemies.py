@@ -20,7 +20,13 @@ class Enemies:
     def getX(self):
         return self.sprite.x
     def getY(self):
-        return self.posy
+        return self.sprite.y
+
+    def getVelX(self):
+        return self.velx
+    def getVelY(self):
+        return self.vely
+
 
     def update(self, dt):
         self.update_time += 1

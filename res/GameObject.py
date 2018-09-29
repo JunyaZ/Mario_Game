@@ -2,12 +2,14 @@ import pyglet
 import os
 
 
+
 class GameObject:
     def __init__(self, posx, posy, image = None):
         self.posx = posx
         self.posy = posy
         self.velx = 0
         self.vely = 0
+        self.score = 0
 
         self.imageIndex = 0
         self.update_time = 0
@@ -43,17 +45,41 @@ class GameObject:
         if image is not None:
             image = pyglet.image.load((os.getcwd())[:-3]+'sprites/heroes/mario/super/'+image)
             self.sprite = pyglet.sprite.Sprite(image, x = self.posx, y = self.posy)
+        self.attack_status = 0
+
+    def get_score(self):
+        return self.score
+
+    def getX(self):
+        return self.sprite.x
+    def getY(self):
+        return self.sprite.y
+
+    def getVelX(self):
+        return self.velx
+    def getVelY(self):
+        return self.vely
 
     def draw(self):
         self.sprite.draw()
 
     def update(self, dt):
+
+
         self.update_time += 1;
         self.sprite.x += self.velx * dt
         self.sprite.y += self.vely * dt
-        if(self.update_time%10 == 0 ):
+        if(self.update_time%10 == 0):
             self.imageIndex += 2
             self.imageIndex = self.imageIndex % len(self.imageList)
+            if(self.state == 4):
+                if(self.imageIndex == 1 or self.imageIndex == 0):
+                    self.attack_status = 2
+                else:
+                    self.attack_status = 1
+            else:
+                self.attack_status = 0
+
             image = self.imageList[self.imageIndex]
 
 
